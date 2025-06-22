@@ -1,0 +1,77 @@
+?? Route Efficiency Analyzer (Swap Route Intelligence)
+?? Project Description
+A Python-based tool to evaluate and score the efficiency of token swap routes using Jupiter's Quote API. This tool helps developers and users understand how swap routes are constructed, how efficient they are, and how they compare against alternatives.
+?? Use Case
+Given a token swap (e.g., SOL to USDC), the tool:
+* Fetches possible swap routes from the Jupiter Quote API
+* Analyzes routes for:
+o Number of hops
+o Output amount
+o Platforms used (Orca, Raydium, etc.)
+o Slippage
+o Price impact
+* Computes an Efficiency Score
+* Outputs a CLI table comparing top routes
+?? Tech Stack
+* Language: Python
+* Output: CLI-based output using rich/tabulate or optionally Streamlit
+* External API: https://quote-api.jup.ag/v6/quote
+?? Features
+1. Input Module
+* Accepts:
+o Input token mint address
+o Output token mint address
+o Amount
+o Slippage bps (optional)
+o Max number of routes (optional)
+2. Quote Fetcher
+* Makes GET request to the Jupiter Quote API
+* Parameters:
+o inputMint
+o outputMint
+o amount
+o slippageBps
+o onlyDirectRoutes (optional)
+3. Route Analyzer
+* For each route:
+o Count hops (swapSteps)
+o Collect platforms involved
+o Extract outAmount, priceImpact, slippage
+o Estimate route efficiency score:
+Efficiency Score = (OutAmount / Hops) × (1 - PriceImpact)
+4. Comparator & Formatter
+* Compare top 3-5 routes
+* Output formatted table with:
+| Route # | Out Amt | Hops | Platforms | Price Impact | Score |
+5. Optional Enhancements
+* Visualization via Streamlit or simple bar chart
+* JSON export for further use
+?? Project Structure
+route_efficiency_analyzer/
+?
+??? main.py                  # Entry point for CLI execution
+??? jupiter_api.py           # Handles API requests to Jupiter Quote API
+??? analyzer.py              # Contains logic to evaluate routes
+??? utils.py                 # Utility functions (formatting, conversions)
+??? constants.py             # Token mint constants or lookup dictionaries
+??? requirements.txt         # List of dependencies
+??? README.md                # This file
+?? Jupiter Quote API Reference
+* Base: https://quote-api.jup.ag/v6/quote
+* Example params:
+o inputMint=So11111111111111111111111111111111111111112 (SOL)
+o outputMint=USDCmintAddress
+o amount=10000000
+o slippageBps=50
+?? Why It's Unique
+* Transparent route analysis
+* Adds educational/debugging value for devs
+* Useful for DEX traders to optimize returns
+* Lightweight yet powerful backend tool
+??? Future Enhancements
+* CLI flags to choose output format
+* Historical route analysis
+* Telegram/Discord alerts for efficient route spikes
+
+Built with ?? for the Namaste Jupiverse Hackathon
+
